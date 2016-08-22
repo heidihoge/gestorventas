@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClientesViewDlg" widgetVar="ClientesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewClientesTitle}" closeOnEscape="true">
+
+            <h:form id="ClientesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{clientesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewClientesLabel_idCliente}"/>
+                        <h:outputText value="#{clientesController.selected.idCliente}" title="#{myBundle.ViewClientesTitle_idCliente}"/>
+
+                        <h:outputText value="#{myBundle.ViewClientesLabel_direccion}"/>
+                        <h:outputText value="#{clientesController.selected.direccion}" title="#{myBundle.ViewClientesTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewClientesLabel_nombre}"/>
+                        <h:outputText value="#{clientesController.selected.nombre}" title="#{myBundle.ViewClientesTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewClientesLabel_telefono}"/>
+                        <h:outputText value="#{clientesController.selected.telefono}" title="#{myBundle.ViewClientesTitle_telefono}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ClientesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

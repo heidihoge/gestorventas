@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ProductosCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateProductosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ProductosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ProductosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productosController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_codProducto}" for="codProducto" />
+                            <p:inputText id="codProducto" value="#{productosController.selected.codProducto}" title="#{myBundle.CreateProductosTitle_codProducto}" required="true" requiredMessage="#{myBundle.CreateProductosRequiredMessage_codProducto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{productosController.selected.descripcion}" title="#{myBundle.CreateProductosTitle_descripcion}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_iva}" for="iva" />
+                            <p:inputText id="iva" value="#{productosController.selected.iva}" title="#{myBundle.CreateProductosTitle_iva}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{productosController.selected.nombre}" title="#{myBundle.CreateProductosTitle_nombre}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_precioUnitario}" for="precioUnitario" />
+                            <p:inputText id="precioUnitario" value="#{productosController.selected.precioUnitario}" title="#{myBundle.CreateProductosTitle_precioUnitario}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_stockActual}" for="stockActual" />
+                            <p:inputText id="stockActual" value="#{productosController.selected.stockActual}" title="#{myBundle.CreateProductosTitle_stockActual}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProductosLabel_stockMinimo}" for="stockMinimo" />
+                            <p:inputText id="stockMinimo" value="#{productosController.selected.stockMinimo}" title="#{myBundle.CreateProductosTitle_stockMinimo}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{productosController.saveNew}" value="#{myBundle.Save}" update="display,:ProductosListPage:ProductosListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ProductosListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

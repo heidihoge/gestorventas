@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ClientesCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateClientesTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ClientesListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ClientesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{clientesController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateClientesLabel_direccion}" for="direccion" />
+                            <p:inputText id="direccion" value="#{clientesController.selected.direccion}" title="#{myBundle.CreateClientesTitle_direccion}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateClientesLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{clientesController.selected.nombre}" title="#{myBundle.CreateClientesTitle_nombre}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateClientesLabel_telefono}" for="telefono" />
+                            <p:inputText id="telefono" value="#{clientesController.selected.telefono}" title="#{myBundle.CreateClientesTitle_telefono}" size="255" maxlength="255"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{clientesController.saveNew}" value="#{myBundle.Save}" update="display,:ClientesListPage:ClientesListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ClientesListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

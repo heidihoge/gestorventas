@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="VentasDetalleEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditVentasDetalleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:VentasDetalleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="VentasDetalleEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{ventasDetalleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditVentasDetalleLabel_ventasDetallePK_idProducto}" for="ventasDetallePK_idProducto" />
+                            <h:outputText id="ventasDetallePK_idProducto" value="#{ventasDetalleController.selected.ventasDetallePK.idProducto}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditVentasDetalleLabel_ventasDetallePK_codigo}" for="ventasDetallePK_codigo" />
+                            <h:outputText id="ventasDetallePK_codigo" value="#{ventasDetalleController.selected.ventasDetallePK.codigo}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentasDetalleLabel_factura}" for="factura" />
+                            <p:inputText id="factura" value="#{ventasDetalleController.selected.factura}" title="#{myBundle.EditVentasDetalleTitle_factura}" required="true" requiredMessage="#{myBundle.EditVentasDetalleRequiredMessage_factura}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentasDetalleLabel_importeBruto}" for="importeBruto" />
+                            <p:inputText id="importeBruto" value="#{ventasDetalleController.selected.importeBruto}" title="#{myBundle.EditVentasDetalleTitle_importeBruto}" required="true" requiredMessage="#{myBundle.EditVentasDetalleRequiredMessage_importeBruto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentasDetalleLabel_montoIva}" for="montoIva" />
+                            <p:inputText id="montoIva" value="#{ventasDetalleController.selected.montoIva}" title="#{myBundle.EditVentasDetalleTitle_montoIva}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{ventasDetalleController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:VentasDetalleListPage:VentasDetalleListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:VentasDetalleListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

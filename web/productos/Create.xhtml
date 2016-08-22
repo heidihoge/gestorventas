@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductosCreateDlg" widgetVar="ProductosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateProductosTitle}" closeOnEscape="true">
+
+            <h:form id="ProductosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{productosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_codProducto}" for="codProducto" />
+                        <p:inputText id="codProducto" value="#{productosController.selected.codProducto}" title="#{myBundle.CreateProductosTitle_codProducto}" required="true" requiredMessage="#{myBundle.CreateProductosRequiredMessage_codProducto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{productosController.selected.descripcion}" title="#{myBundle.CreateProductosTitle_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_iva}" for="iva" />
+                        <p:inputText id="iva" value="#{productosController.selected.iva}" title="#{myBundle.CreateProductosTitle_iva}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{productosController.selected.nombre}" title="#{myBundle.CreateProductosTitle_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_precioUnitario}" for="precioUnitario" />
+                        <p:inputText id="precioUnitario" value="#{productosController.selected.precioUnitario}" title="#{myBundle.CreateProductosTitle_precioUnitario}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_stockActual}" for="stockActual" />
+                        <p:inputText id="stockActual" value="#{productosController.selected.stockActual}" title="#{myBundle.CreateProductosTitle_stockActual}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProductosLabel_stockMinimo}" for="stockMinimo" />
+                        <p:inputText id="stockMinimo" value="#{productosController.selected.stockMinimo}" title="#{myBundle.CreateProductosTitle_stockMinimo}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productosController.saveNew}" value="#{myBundle.Save}" update="display,:ProductosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProductosCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProductosCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

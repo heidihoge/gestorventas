@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ProductosViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewProductosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ProductosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ProductosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{productosController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_codProducto}"/>
+                            <h:outputText value="#{productosController.selected.codProducto}" title="#{myBundle.ViewProductosTitle_codProducto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_descripcion}"/>
+                            <h:outputText value="#{productosController.selected.descripcion}" title="#{myBundle.ViewProductosTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_iva}"/>
+                            <h:outputText value="#{productosController.selected.iva}" title="#{myBundle.ViewProductosTitle_iva}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_nombre}"/>
+                            <h:outputText value="#{productosController.selected.nombre}" title="#{myBundle.ViewProductosTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_precioUnitario}"/>
+                            <h:outputText value="#{productosController.selected.precioUnitario}" title="#{myBundle.ViewProductosTitle_precioUnitario}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_stockActual}"/>
+                            <h:outputText value="#{productosController.selected.stockActual}" title="#{myBundle.ViewProductosTitle_stockActual}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProductosLabel_stockMinimo}"/>
+                            <h:outputText value="#{productosController.selected.stockMinimo}" title="#{myBundle.ViewProductosTitle_stockMinimo}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

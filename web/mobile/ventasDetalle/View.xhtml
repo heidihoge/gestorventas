@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="VentasDetalleViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewVentasDetalleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:VentasDetalleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="VentasDetalleViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{ventasDetalleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewVentasDetalleLabel_ventasDetallePK_idProducto}"/>
+                            <h:outputText value="#{ventasDetalleController.selected.ventasDetallePK.idProducto}" title="#{myBundle.ViewVentasDetalleTitle_ventasDetallePK_idProducto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewVentasDetalleLabel_ventasDetallePK_codigo}"/>
+                            <h:outputText value="#{ventasDetalleController.selected.ventasDetallePK.codigo}" title="#{myBundle.ViewVentasDetalleTitle_ventasDetallePK_codigo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewVentasDetalleLabel_factura}"/>
+                            <h:outputText value="#{ventasDetalleController.selected.factura}" title="#{myBundle.ViewVentasDetalleTitle_factura}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewVentasDetalleLabel_importeBruto}"/>
+                            <h:outputText value="#{ventasDetalleController.selected.importeBruto}" title="#{myBundle.ViewVentasDetalleTitle_importeBruto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewVentasDetalleLabel_montoIva}"/>
+                            <h:outputText value="#{ventasDetalleController.selected.montoIva}" title="#{myBundle.ViewVentasDetalleTitle_montoIva}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VentasDetalleCreateDlg" widgetVar="VentasDetalleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVentasDetalleTitle}" closeOnEscape="true">
+
+            <h:form id="VentasDetalleCreateForm">
+
+                <h:panelGroup id="display" rendered="#{ventasDetalleController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateVentasDetalleLabel_ventasDetallePK_idProducto}" for="ventasDetallePK_idProducto" />
+                        <p:inputText id="ventasDetallePK_idProducto" value="#{ventasDetalleController.selected.ventasDetallePK.idProducto}" title="#{myBundle.CreateVentasDetalleTitle_ventasDetallePK_idProducto}" required="true" requiredMessage="#{myBundle.CreateVentasDetalleRequiredMessage_ventasDetallePK_idProducto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentasDetalleLabel_ventasDetallePK_codigo}" for="ventasDetallePK_codigo" />
+                        <p:inputText id="ventasDetallePK_codigo" value="#{ventasDetalleController.selected.ventasDetallePK.codigo}" title="#{myBundle.CreateVentasDetalleTitle_ventasDetallePK_codigo}" required="true" requiredMessage="#{myBundle.CreateVentasDetalleRequiredMessage_ventasDetallePK_codigo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentasDetalleLabel_factura}" for="factura" />
+                        <p:inputText id="factura" value="#{ventasDetalleController.selected.factura}" title="#{myBundle.CreateVentasDetalleTitle_factura}" required="true" requiredMessage="#{myBundle.CreateVentasDetalleRequiredMessage_factura}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentasDetalleLabel_importeBruto}" for="importeBruto" />
+                        <p:inputText id="importeBruto" value="#{ventasDetalleController.selected.importeBruto}" title="#{myBundle.CreateVentasDetalleTitle_importeBruto}" required="true" requiredMessage="#{myBundle.CreateVentasDetalleRequiredMessage_importeBruto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVentasDetalleLabel_montoIva}" for="montoIva" />
+                        <p:inputText id="montoIva" value="#{ventasDetalleController.selected.montoIva}" title="#{myBundle.CreateVentasDetalleTitle_montoIva}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ventasDetalleController.saveNew}" value="#{myBundle.Save}" update="display,:VentasDetalleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentasDetalleCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('VentasDetalleCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
