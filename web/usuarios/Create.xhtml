@@ -16,7 +16,10 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{myBundle.CreateUsuariosLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.CreateUsuariosTitle_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.CreateUsuariosTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateUsuariosRequiredMessage_nombre}" size="255" maxlength="255"/>
+                    
+                        <p:outputLabel value="#{myBundle.CreateUsuariosLabel_password}" for="password" />
+                        <p:password id="password" value="#{usuariosController.selected.password}" title="#{myBundle.CreateUsuariosTitle_password}" required="true" requiredMessage="#{myBundle.CreateUsuariosRequiredMessage_password}" size="255" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuariosController.saveNew}" value="#{myBundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuariosCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
@@ -28,7 +31,6 @@
             </h:form>
 
         </p:dialog>
-
     </ui:composition>
 
 </html>

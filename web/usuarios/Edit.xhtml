@@ -19,7 +19,7 @@
                         <h:outputText id="idUsuario" value="#{usuariosController.selected.idUsuario}" />
 
                         <p:outputLabel value="#{myBundle.EditUsuariosLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.EditUsuariosTitle_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.EditUsuariosTitle_nombre}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_nombre}" size="255" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuariosController.save}" value="#{myBundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuariosEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,13 +34,29 @@ public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator="UsuSeq")
+    @SequenceGenerator(name="UsuSeq", sequenceName="id_usuario_usuario_seq",
+        allocationSize=1)
     @Basic(optional = false)
     @Column(name = "id_usuario")
     private Integer idUsuario;
     @Size(max = 255)
     @Column(name = "nombre")
+    @Basic(optional = false)
     private String nombre;
+    
+    @Size(max = 255)
+    @Column(name = "password")
+    @Basic(optional = false)
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Usuarios() {
     }

@@ -28,7 +28,7 @@
 
                         <pm:field>
                             <p:outputLabel value="#{myBundle.EditUsuariosLabel_nombre}" for="nombre" />
-                            <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.EditUsuariosTitle_nombre}" size="255" maxlength="255"/>
+                            <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.EditUsuariosTitle_nombre}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_nombre}" size="255" maxlength="255"/>
                         </pm:field>
                     </p:outputPanel>
                     <p:commandButton actionListener="#{usuariosController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:UsuariosListPage:UsuariosListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:UsuariosListPage')}"/>
