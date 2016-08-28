@@ -11,14 +11,13 @@
             <p:menubar>
 
                 <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                <p:submenu label="#{myBundle.Maintenance}">
-                    <p:menuitem value="#{myBundle.ClientesHeading}..." outcome="/clientes/index" />
-                    <p:menuitem value="#{myBundle.ProductosHeading}..." outcome="/productos/index" />
-                    <p:menuitem value="#{myBundle.UsuariosHeading}..." outcome="/usuarios/index" />
-                    <p:menuitem value="#{myBundle.VentasHeading}..." outcome="/ventas/index" />
-                    <p:menuitem value="#{myBundle.VentasDetalleHeading}..." outcome="/ventasDetalle/index" />
+                <p:submenu label="Ventas" icon="ui-icon-cart">
+                    <p:menuitem value="Agregar Venta" outcome="/facturacion/index" />
                 </p:submenu>
-                <p:menuitem value="#{myBundle.Mobile}" outcome="/mobile/index" icon="ui-icon-signal"/>
+                <p:menuitem style="display: none" value="#{myBundle.Mobile}" outcome="/mobile/index" icon="ui-icon-signal"/>
+                <p:submenu label="Usuario: #{loginController.username}" style="float:right">
+                    <p:menuitem value="Salir" action="#{loginController.logout}" />
+                </p:submenu>
             </p:menubar>
         </h:form>
     </ui:composition>
