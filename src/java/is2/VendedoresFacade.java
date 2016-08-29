@@ -8,14 +8,13 @@ package is2;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author ADMIN
  */
 @Stateless
-public class VentasFacade extends AbstractFacade<Ventas> {
+public class VendedoresFacade extends AbstractFacade<Vendedores> {
 
     @PersistenceContext(unitName = "gestorVentasPU")
     private EntityManager em;
@@ -24,20 +23,9 @@ public class VentasFacade extends AbstractFacade<Ventas> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    public String getLastId(){
-        try{
-            Query getLastId = em.createNativeQuery("Select nro_factura + 1 from ventas order"
-                    + " by nro_factura desc limit 1");
-            Object singleResult = getLastId.getSingleResult();
-            return singleResult.toString();
-        }catch(Exception ex){
-            return "0";
-        }
-    }
 
-    public VentasFacade() {
-        super(Ventas.class);
+    public VendedoresFacade() {
+        super(Vendedores.class);
     }
     
 }

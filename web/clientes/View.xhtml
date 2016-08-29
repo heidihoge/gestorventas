@@ -26,6 +26,9 @@
 
                         <h:outputText value="#{myBundle.ViewClientesLabel_telefono}"/>
                         <h:outputText value="#{clientesController.selected.telefono}" title="#{myBundle.ViewClientesTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewClientesLabel_apellido}"/>
+                        <h:outputText value="#{clientesController.selected.apellido}" title="#{myBundle.ViewClientesTitle_apellido}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('ClientesViewDialog').hide()"/>
                 </h:panelGroup>

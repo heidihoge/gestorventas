@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+                <h:form id="AddVentasForm"> 
+                    <p:panel header="Nueva Venta"> 
+                        <h:panelGrid columns="4" cellpadding="5"> 
+                            <h:outputText value="Nro de Venta:" /> 
+                            <h:outputText id="nroVenta" value="#{agregarVentasController.nroVenta}" /> 
+                            <h:outputText value="Cliente:" /> 
+                            <h:selectOneMenu id="comboClientes" value="#{agregarVentasController.idCliente}">  
+                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
+                                <f:selectItems value="#{agregarVentasController.clienteList}" var="cliente" itemLabel="#{cliente.nombre} #{vendedor.apellido}" itemValue="#{cliente.idCliente}" />  
+                            </h:selectOneMenu>  
+
+                            <h:outputText value="Fecha:" /> 
+                            <h:outputText id="fechaVenta" value="#{agregarVentasController.fechaVenta}" /> 
+                            <h:outputText value="Vendedor:" /> 
+                            <h:selectOneMenu id="comboVendedor" value="#{agregarVentasController.idVendedor}">  
+                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
+                                <f:selectItems value="#{agregarVentasController.vendedorList}" var="vendedor" itemLabel="#{vendedor.nombre} #{vendedor.apellido}" itemValue="#{vendedor.id}" />  
+                            </h:selectOneMenu>  
+                        </h:panelGrid> 
+                    </p:panel> 
+                    <p:panel header="Agregar Productos">
+                        <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="Producto:" />
+                                <h:selectOneMenu id="comboProductos" value="#{agregarVentasController.producto}">
+                                    <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{agregarVentasController.productos}" 
+                                        var="producto" 
+                                        itemLabel="#{producto.nombre}" 
+                                        itemValue="#{producto}" />
+                                </h:selectOneMenu>
+                                <h:outputText value="Cantidad:" />
+                                <p:spinner id="cantidad" value="#{agregarVentasController.cantidad}" min="1" size="2" />
+                                <p:commandButton action="#{agregarVentasController.agregarProducto}" id="buttonAddProducto" value="Agregar Producto" immediate="true"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form> 
+
+            <ui:include src="/seguridad/index.xhtml"/>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

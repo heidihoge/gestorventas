@@ -22,6 +22,11 @@
                     <p:outputPanel rendered="#{usuariosController.selected != null}">
 
                         <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuariosLabel_password}" for="password" />
+                            <p:inputText id="password" value="#{usuariosController.selected.password}" title="#{myBundle.EditUsuariosTitle_password}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_password}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
                             <h:outputLabel value="#{myBundle.EditUsuariosLabel_idUsuario}" for="idUsuario" />
                             <h:outputText id="idUsuario" value="#{usuariosController.selected.idUsuario}" />
                         </pm:field>

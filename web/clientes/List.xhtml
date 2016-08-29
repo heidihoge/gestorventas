@@ -6,85 +6,93 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="ClientesListForm">
+        <h:form id="ClientesListForm">
 
-        <p:panel header="#{myBundle.ListClientesTitle}">
-            <p:contextMenu id="ClientesDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ClientesListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ClientesListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ClientesListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ClientesListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.ClientesMenuItem_ventasCollection}" icon="ui-icon-search"  action="#{clientesController.navigateVentasCollection}" disabled="#{empty clientesController.selected.ventasCollection}" ajax="false"/>  
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{clientesController.items}"
-                         lazy="false"
-                         rowKey="#{item.idCliente}"
-                         var="item"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{clientesController.selected}">
-                <!--
-                         To enable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{clientesController.lazyItems}"
-                         lazy="true"
-                         rowKey="HASH{item.idCliente}"  <<< Remove this line
-                -->
+            <p:panel header="#{myBundle.ListClientesTitle}">
+                <p:contextMenu id="ClientesDataTableContextMenu" for="datalist">  
+                    <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ClientesListForm:createButton').click();" icon="ui-icon-plus"/>
+                    <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ClientesListForm:viewButton').click();" icon="ui-icon-search"/>
+                    <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ClientesListForm:editButton').click();" icon="ui-icon-pencil"/>
+                    <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ClientesListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                    <p:separator/>
+                    <p:menuitem value="#{myBundle.ClientesMenuItem_ventasCollection}" icon="ui-icon-search"  action="#{clientesController.navigateVentasCollection}" disabled="#{empty clientesController.selected.ventasCollection}" ajax="false"/>  
+                </p:contextMenu>
+                <p:dataTable id="datalist"
+                             value="#{clientesController.items}"
+                             lazy="false"
+                             rowKey="#{item.idCliente}"
+                             var="item"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{clientesController.selected}">
+<!--
+         To enable Lazy Loading, please copy/replace the following lines above,
+         and be sure to replace the word HASH with the # symbol:
 
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientesDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientesDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ClientesListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.idCliente}" filterBy="#{item.idCliente}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListClientesTitle_idCliente}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.idCliente}"/>
-                </p:column>
+         value="HASH{clientesController.lazyItems}"
+         lazy="true"
+         rowKey="HASH{item.idCliente}"  <<< Remove this line
+-->
 
 
-                <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListClientesTitle_direccion}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.direccion}"/>
-                </p:column>
+                    <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientesDataTableContextMenu"/>
+                    <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientesDataTableContextMenu"/>
+                    <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                    <p:ajax event="rowDblselect" onsuccess="document.getElementById('ClientesListForm:viewButton').click();"/>
+
+                    <p:column sortBy="#{item.idCliente}" filterBy="#{item.idCliente}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClientesTitle_idCliente}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idCliente}"/>
+                    </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListClientesTitle_nombre}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.nombre}"/>
-                </p:column>
+                    <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClientesTitle_direccion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.direccion}"/>
+                    </p:column>
 
 
-                <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListClientesTitle_telefono}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.telefono}"/>
-                </p:column>
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClientesTitle_nombre}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
 
 
-            </p:dataTable>
+                    <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClientesTitle_telefono}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefono}"/>
+                    </p:column>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{clientesController.prepareCreate}" update=":ClientesCreateForm" oncomplete="PF('ClientesCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ClientesViewForm" oncomplete="PF('ClientesViewDialog').show()" disabled="#{empty clientesController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ClientesEditForm" oncomplete="PF('ClientesEditDialog').show()" disabled="#{empty clientesController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{clientesController.delete}" update=":growl,datalist" disabled="#{empty clientesController.selected}">
-                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
 
-        </p:panel>
-        <ui:include src="/confirmation.xhtml"/>
-    </h:form>
+                    <p:column sortBy="#{item.apellido}" filterBy="#{item.apellido}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListClientesTitle_apellido}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.apellido}"/>
+                    </p:column>
+
+
+                </p:dataTable>
+
+                        <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{clientesController.prepareCreate}" update=":ClientesCreateForm" oncomplete="PF('ClientesCreateDialog').show()"/>
+                        <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ClientesViewForm" oncomplete="PF('ClientesViewDialog').show()" disabled="#{empty clientesController.selected}"/>
+                        <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ClientesEditForm" oncomplete="PF('ClientesEditDialog').show()" disabled="#{empty clientesController.selected}"/>
+                        <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{clientesController.delete}" update=":growl,datalist" disabled="#{empty clientesController.selected}">
+                            <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+
+            </p:panel>
+            <ui:include src="/confirmation.xhtml"/>
+        </h:form>
 
 </ui:composition>

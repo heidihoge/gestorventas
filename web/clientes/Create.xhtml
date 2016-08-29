@@ -15,14 +15,17 @@
                 <h:panelGroup id="display" rendered="#{clientesController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreateClientesLabel_direccion}" for="direccion" />
+                                <p:outputLabel value="#{myBundle.CreateClientesLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{clientesController.selected.direccion}" title="#{myBundle.CreateClientesTitle_direccion}" size="255" maxlength="255"/>
 
-                        <p:outputLabel value="#{myBundle.CreateClientesLabel_nombre}" for="nombre" />
+                                <p:outputLabel value="#{myBundle.CreateClientesLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{clientesController.selected.nombre}" title="#{myBundle.CreateClientesTitle_nombre}" size="255" maxlength="255"/>
 
-                        <p:outputLabel value="#{myBundle.CreateClientesLabel_telefono}" for="telefono" />
+                                <p:outputLabel value="#{myBundle.CreateClientesLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{clientesController.selected.telefono}" title="#{myBundle.CreateClientesTitle_telefono}" size="255" maxlength="255"/>
+
+                                <p:outputLabel value="#{myBundle.CreateClientesLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{clientesController.selected.apellido}" title="#{myBundle.CreateClientesTitle_apellido}" size="50" maxlength="50"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clientesController.saveNew}" value="#{myBundle.Save}" update="display,:ClientesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClientesCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

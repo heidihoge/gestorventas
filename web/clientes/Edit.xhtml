@@ -26,6 +26,9 @@
 
                         <p:outputLabel value="#{myBundle.EditClientesLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{clientesController.selected.telefono}" title="#{myBundle.EditClientesTitle_telefono}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditClientesLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{clientesController.selected.apellido}" title="#{myBundle.EditClientesTitle_apellido}" size="50" maxlength="50"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{clientesController.save}" value="#{myBundle.Save}" update="display,:ClientesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ClientesEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

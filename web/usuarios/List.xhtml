@@ -40,6 +40,14 @@
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('UsuariosListForm:viewButton').click();"/>
 
+                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUsuariosTitle_password}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.password}"/>
+                </p:column>
+
+
                 <p:column sortBy="#{item.idUsuario}" filterBy="#{item.idUsuario}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsuariosTitle_idUsuario}"/>

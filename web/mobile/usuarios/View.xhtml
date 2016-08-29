@@ -22,6 +22,11 @@
                     <p:outputPanel rendered="#{usuariosController.selected != null}">
 
                         <pm:field>
+                            <h:outputText value="#{myBundle.ViewUsuariosLabel_password}"/>
+                            <h:outputText value="#{usuariosController.selected.password}" title="#{myBundle.ViewUsuariosTitle_password}"/>
+                        </pm:field>
+
+                        <pm:field>
                             <h:outputText value="#{myBundle.ViewUsuariosLabel_idUsuario}"/>
                             <h:outputText value="#{usuariosController.selected.idUsuario}" title="#{myBundle.ViewUsuariosTitle_idUsuario}"/>
                         </pm:field>

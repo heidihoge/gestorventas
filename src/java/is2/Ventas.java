@@ -7,8 +7,10 @@ package is2;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ventas.findByTotalIva", query = "SELECT v FROM Ventas v WHERE v.totalIva = :totalIva"),
     @NamedQuery(name = "Ventas.findByTotalVenta", query = "SELECT v FROM Ventas v WHERE v.totalVenta = :totalVenta")})
 public class Ventas implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nroFactura")
+    private Collection<VentasDetalle> ventasDetalleCollection;
+    @JoinColumn(name = "id_vendedor", referencedColumnName = "id")
+    @ManyToOne
+    private Vendedores idVendedor;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -125,6 +135,23 @@ public class Ventas implements Serializable {
     @Override
     public String toString() {
         return "is2.Ventas[ nroFactura=" + nroFactura + " ]";
+    }
+
+    @XmlTransient
+    public Collection<VentasDetalle> getVentasDetalleCollection() {
+        return ventasDetalleCollection;
+    }
+
+    public void setVentasDetalleCollection(Collection<VentasDetalle> ventasDetalleCollection) {
+        this.ventasDetalleCollection = ventasDetalleCollection;
+    }
+
+    public Vendedores getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(Vendedores idVendedor) {
+        this.idVendedor = idVendedor;
     }
     
 }

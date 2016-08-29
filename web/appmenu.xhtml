@@ -12,8 +12,12 @@
 
                 <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
                 <p:submenu label="Ventas" icon="ui-icon-cart">
-                    <p:menuitem value="Agregar Venta" outcome="/facturacion/index" />
+                    <p:menuitem value="Agregar Venta" outcome="/venta/index" />
                 </p:submenu>
+
+                <p:menuitem value="Clientes" outcome="/clientes/index" icon="ui-icon-person"/>
+                <p:menuitem value="Productos" outcome="/productos/index" icon="ui-icon-clipboard"/>
+                <p:menuitem value="Vendedores" outcome="/vendedores/index" icon="ui-icon-person"/>
                 <p:menuitem style="display: none" value="#{myBundle.Mobile}" outcome="/mobile/index" icon="ui-icon-signal"/>
                 <p:submenu label="Usuario: #{loginController.username}" style="float:right">
                     <p:menuitem value="Salir" action="#{loginController.logout}" />

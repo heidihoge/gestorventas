@@ -40,6 +40,11 @@
                             <p:outputLabel value="#{myBundle.EditClientesLabel_telefono}" for="telefono" />
                             <p:inputText id="telefono" value="#{clientesController.selected.telefono}" title="#{myBundle.EditClientesTitle_telefono}" size="255" maxlength="255"/>
                         </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditClientesLabel_apellido}" for="apellido" />
+                            <p:inputText id="apellido" value="#{clientesController.selected.apellido}" title="#{myBundle.EditClientesTitle_apellido}" size="50" maxlength="50"/>
+                        </pm:field>
                     </p:outputPanel>
                     <p:commandButton actionListener="#{clientesController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ClientesListPage:ClientesListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ClientesListPage')}"/>
 
