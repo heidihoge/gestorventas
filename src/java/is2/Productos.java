@@ -7,16 +7,20 @@ package is2;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Productos.findByStockActual", query = "SELECT p FROM Productos p WHERE p.stockActual = :stockActual"),
     @NamedQuery(name = "Productos.findByStockMinimo", query = "SELECT p FROM Productos p WHERE p.stockMinimo = :stockMinimo")})
 public class Productos implements Serializable {
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
+    private Collection<VentasDetalle> ventasDetalleCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -143,6 +151,15 @@ public class Productos implements Serializable {
     @Override
     public String toString() {
         return "is2.Productos[ codProducto=" + codProducto + " ]";
+    }
+
+    @XmlTransient
+    public Collection<VentasDetalle> getVentasDetalleCollection() {
+        return ventasDetalleCollection;
+    }
+
+    public void setVentasDetalleCollection(Collection<VentasDetalle> ventasDetalleCollection) {
+        this.ventasDetalleCollection = ventasDetalleCollection;
     }
     
 }

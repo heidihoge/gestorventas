@@ -27,25 +27,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ventas_detalle")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "VentasDetalle.findAll", query = "SELECT v FROM VentasDetalle v"),
-    @NamedQuery(name = "VentasDetalle.findByIdProducto", query = "SELECT v FROM VentasDetalle v WHERE v.idProducto = :idProducto"),
-    @NamedQuery(name = "VentasDetalle.findByImporteBruto", query = "SELECT v FROM VentasDetalle v WHERE v.importeBruto = :importeBruto"),
-    @NamedQuery(name = "VentasDetalle.findByMontoIva", query = "SELECT v FROM VentasDetalle v WHERE v.montoIva = :montoIva"),
-    @NamedQuery(name = "VentasDetalle.findById", query = "SELECT v FROM VentasDetalle v WHERE v.id = :id")})
 public class VentasDetalle implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_producto")
-    private BigInteger idProducto;
     @Basic(optional = false)
     @NotNull
     @Column(name = "importe_bruto")
     private BigInteger importeBruto;
     @Column(name = "monto_iva")
     private BigInteger montoIva;
+    @Column(name = "cantidad")
+    private BigInteger cantidad;
+
+    public BigInteger getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigInteger cantidad) {
+        this.cantidad = cantidad;
+    }
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
@@ -55,6 +54,9 @@ public class VentasDetalle implements Serializable {
     @JoinColumn(name = "nro_factura", referencedColumnName = "nro_factura")
     @ManyToOne(optional = false)
     private Ventas nroFactura;
+    @JoinColumn(name = "id_producto", referencedColumnName = "cod_producto")
+    @ManyToOne(optional = false)
+    private Productos idProducto;
 
     public VentasDetalle() {
     }
@@ -63,18 +65,9 @@ public class VentasDetalle implements Serializable {
         this.id = id;
     }
 
-    public VentasDetalle(BigDecimal id, BigInteger idProducto, BigInteger importeBruto) {
+    public VentasDetalle(BigDecimal id, BigInteger importeBruto) {
         this.id = id;
-        this.idProducto = idProducto;
         this.importeBruto = importeBruto;
-    }
-
-    public BigInteger getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(BigInteger idProducto) {
-        this.idProducto = idProducto;
     }
 
     public BigInteger getImporteBruto() {
@@ -109,6 +102,14 @@ public class VentasDetalle implements Serializable {
         this.nroFactura = nroFactura;
     }
 
+    public Productos getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Productos idProducto) {
+        this.idProducto = idProducto;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,5 +134,7 @@ public class VentasDetalle implements Serializable {
     public String toString() {
         return "is2.VentasDetalle[ id=" + id + " ]";
     }
+
+    
     
 }

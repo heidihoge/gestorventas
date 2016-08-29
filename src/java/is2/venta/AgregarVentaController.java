@@ -11,9 +11,12 @@ import is2.Productos;
 import is2.ProductosFacade;
 import is2.Vendedores;
 import is2.VendedoresFacade;
+import is2.Ventas;
 import is2.VentasDetalle;
 import is2.VentasFacade;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +25,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 import javax.inject.Named;
 
 /**
@@ -33,10 +38,55 @@ import javax.inject.Named;
 public class AgregarVentaController implements Serializable{
     private String fechaVenta;
     private String idCliente;
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(String idVendedor) {
+        this.idVendedor = idVendedor;
+    }
+
+    public String getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
+    }
+    private Clientes cliente;
     private String idVendedor;
+    private Vendedores vendedor;
+    private String idProducto;
     private Productos producto;
+    private VentasDetalle seleccionado;
+    private Ventas venta;
+
+    @PostConstruct
+    public void initialize(){
+        venta = new Ventas();
+        venta.setFecha(new Date());
+        venta.setNroFactura(BigDecimal.valueOf(Integer.valueOf(getNroVenta())));
+        venta.setVentasDetalleCollection(detalles);
+    }
+    
+    public VentasDetalle getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(VentasDetalle seleccionado) {
+        this.seleccionado = seleccionado;
+    }
     private int cantidad;
-    private List<VentasDetalle> detalles;
+    private List<VentasDetalle> detalles = new ArrayList<>();
 
     public List<VentasDetalle> getDetalles() {
         return detalles;
@@ -62,12 +112,13 @@ public class AgregarVentaController implements Serializable{
         this.producto = producto;
     }
 
-    public String getIdVendedor() {
-        return idVendedor;
+    public Vendedores getVendedor() {
+        return vendedor;
     }
 
-    public void setIdVendedor(String idVendedor) {
-        this.idVendedor = idVendedor;
+    public void setVendedor(Vendedores vendedor) {
+        venta.setIdVendedor(vendedor);
+        this.vendedor = vendedor;
     }
     
     @EJB
@@ -83,12 +134,13 @@ public class AgregarVentaController implements Serializable{
     ProductosFacade productosFacade;
             
 
-    public String getIdCliente() {
-        return idCliente;
+    public Clientes getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Clientes cliente) {
+        venta.setIdCliente(cliente);
+        this.cliente = cliente;
     }
 
     public List<Clientes> getClienteList() {
@@ -120,8 +172,26 @@ public class AgregarVentaController implements Serializable{
         this.fechaVenta = fechaVenta;
     }
     
-    public void agregarProducto(){
+    public void agregarProducto(ActionEvent event){
+        VentasDetalle nuevoDetalle = new VentasDetalle();
+        nuevoDetalle.setIdProducto(producto);
+        nuevoDetalle.setImporteBruto(producto.getPrecioUnitario().multiply(BigInteger.valueOf(cantidad)));
+        nuevoDetalle.setMontoIva(producto.getPrecioUnitario()
+                    .multiply(BigInteger.valueOf(cantidad))
+                    .multiply(BigInteger.valueOf(producto.getIva()))
+                    .divide(BigInteger.valueOf(100)));
+        nuevoDetalle.setNroFactura(venta);
+        nuevoDetalle.setCantidad(BigInteger.valueOf(cantidad));
         
+        Integer totalIva = venta.getTotalIva();
+        totalIva += producto.getPrecioUnitario().intValue() * cantidad * producto.getIva() / 100;
+        Integer totalVenta = venta.getTotalVenta();
+        totalVenta += producto.getPrecioUnitario().intValue() * cantidad;
+        
+        venta.setTotalIva(totalIva);
+        venta.setTotalVenta(totalVenta);
+        
+        detalles.add(nuevoDetalle);
     }
     
     
