@@ -13,6 +13,7 @@ import is2.Vendedores;
 import is2.VendedoresFacade;
 import is2.Ventas;
 import is2.VentasDetalle;
+import is2.VentasDetalleFacade;
 import is2.VentasFacade;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -76,6 +77,8 @@ public class AgregarVentaController implements Serializable{
         venta.setFecha(new Date());
         venta.setNroFactura(BigDecimal.valueOf(Integer.valueOf(getNroVenta())));
         venta.setVentasDetalleCollection(detalles);
+        venta.setTotalIva(0);
+        venta.setTotalVenta(0);
     }
     
     public VentasDetalle getSeleccionado() {
@@ -132,6 +135,9 @@ public class AgregarVentaController implements Serializable{
     
     @EJB
     ProductosFacade productosFacade;
+    
+    @EJB
+    VentasDetalleFacade ventasDetalleFacade;
             
 
     public Clientes getCliente() {
@@ -187,6 +193,8 @@ public class AgregarVentaController implements Serializable{
         totalIva += producto.getPrecioUnitario().intValue() * cantidad * producto.getIva() / 100;
         Integer totalVenta = venta.getTotalVenta();
         totalVenta += producto.getPrecioUnitario().intValue() * cantidad;
+        nuevoDetalle.setId(BigDecimal.valueOf(Long.valueOf(ventasDetalleFacade.getLastId())));
+        
         
         venta.setTotalIva(totalIva);
         venta.setTotalVenta(totalVenta);

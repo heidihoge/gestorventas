@@ -14,33 +14,35 @@
                             <h:outputText value="Nro de Venta:" /> 
                             <h:outputText id="nroVenta" value="#{agregarVentasController.nroVenta}" /> 
                             <h:outputText value="Cliente:" /> 
-                            <h:selectOneMenu id="comboClientes" value="#{agregarVentasController.idCliente}">  
+                            <h:selectOneMenu id="comboClientes" value="#{agregarVentasController.cliente}" converter="#{clientesConverter}">  
                                 <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
-                                <f:selectItems value="#{agregarVentasController.clienteList}" var="cliente" itemLabel="#{cliente.nombre} #{cliente.apellido}" itemValue="#{cliente.idCliente.toString()}" />  
+                                <f:selectItems value="#{agregarVentasController.clienteList}" var="cliente" itemLabel="#{cliente.nombre} #{cliente.apellido}" itemValue="#{cliente}" />  
                             </h:selectOneMenu>  
 
                             <h:outputText value="Fecha:" /> 
                             <h:outputText id="fechaVenta" value="#{agregarVentasController.fechaVenta}" /> 
                             <h:outputText value="Vendedor:" /> 
-                            <h:selectOneMenu id="comboVendedor" value="#{agregarVentasController.idVendedor}">  
+                            <h:selectOneMenu id="comboVendedor" value="#{agregarVentasController.vendedor}" converter="#{vendedoresConverter}">  
                                 <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
-                                <f:selectItems value="#{agregarVentasController.vendedorList}" var="vendedor" itemLabel="#{vendedor.nombre} #{vendedor.apellido}" itemValue="#{vendedor.id.toString()}" />  
+                                <f:selectItems value="#{agregarVentasController.vendedorList}" var="vendedor" itemLabel="#{vendedor.nombre} #{vendedor.apellido}" itemValue="#{vendedor}" />  
                             </h:selectOneMenu>  
                         </h:panelGrid> 
                     </p:panel> 
                     <p:panel header="Agregar Productos">
                         <h:panelGrid columns="5" cellpadding="5">
                                 <h:outputText value="Producto:" />
-                                <h:selectOneMenu id="comboProductos" value="#{agregarVentasController.idProducto}">
+                                <h:selectOneMenu id="comboProductos" value="#{agregarVentasController.producto}" converter="#{productosConverter}">
                                     <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{agregarVentasController.productos}" 
                                         var="producto" 
                                         itemLabel="#{producto.nombre}" 
-                                        itemValue="#{producto.codProducto.toString()}" />
+                                        itemValue="#{producto}" />
                                 </h:selectOneMenu>
                                 <h:outputText value="Cantidad:" />
                                 <p:spinner id="cantidad" value="#{agregarVentasController.cantidad}" min="1" size="2" />
-                                <p:commandButton actionListener="#{agregarVentasController.agregarProducto}" id="buttonAddProducto" value="Agregar Producto" immediate="true"/>
+                                <p:commandButton actionListener="#{agregarVentasController.agregarProducto}" 
+                                                 id="buttonAddProducto" value="Agregar Producto"
+                                                 update=":AddVentasForm:datalist"/>
 
                         </h:panelGrid>
                     </p:panel>
@@ -48,7 +50,7 @@
                         <p:dataTable id="datalist"
                             value="#{agregarVentasController.detalles}"
                             lazy="false"
-                            rowKey="#{item.id}"
+                            rowKey="#{item.id.toString()}"
                             var="item"
                             paginator="true"
                             rows="10"

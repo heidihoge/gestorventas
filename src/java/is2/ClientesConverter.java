@@ -5,13 +5,17 @@ import is2.ClientesFacade;
 import is2.util.JsfUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-@FacesConverter(value = "clientesConverter")
+//@FacesConverter(value = "clientesConverter")
+@ManagedBean
+@SessionScoped
 public class ClientesConverter implements Converter {
 
     @Inject

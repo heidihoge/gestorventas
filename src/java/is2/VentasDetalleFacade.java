@@ -8,6 +8,7 @@ package is2;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +27,17 @@ public class VentasDetalleFacade extends AbstractFacade<VentasDetalle> {
 
     public VentasDetalleFacade() {
         super(VentasDetalle.class);
+    }
+    
+    public String getLastId(){
+        try{
+            Query getLastId = em.createNativeQuery("Select id + 1 from ventas_detalle order"
+                    + " by id desc limit 1");
+            Object singleResult = getLastId.getSingleResult();
+            return singleResult.toString();
+        }catch(Exception ex){
+            return "0";
+        }
     }
     
 }
