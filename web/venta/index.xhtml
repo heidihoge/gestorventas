@@ -10,29 +10,34 @@
         <ui:define name="body">
                 <h:form id="AddVentasForm"> 
                     <p:panel header="Nueva Venta"> 
-                        <h:panelGrid columns="4" cellpadding="5"> 
+                        <h:panelGrid columns="6" cellpadding="5"> 
                             <h:outputText value="Nro de Venta:" /> 
                             <h:outputText id="nroVenta" value="#{agregarVentasController.nroVenta}" /> 
                             <h:outputText value="Cliente:" /> 
-                            <h:selectOneMenu id="comboClientes" value="#{agregarVentasController.cliente}" converter="#{clientesConverter}">  
-                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
+                            <h:selectOneMenu id="comboClientes" value="#{agregarVentasController.cliente}" converter="#{clientesConverter}" required="true">  
+                                <f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true" />  
                                 <f:selectItems value="#{agregarVentasController.clienteList}" var="cliente" itemLabel="#{cliente.nombre} #{cliente.apellido}" itemValue="#{cliente}" />  
                             </h:selectOneMenu>  
 
                             <h:outputText value="Fecha:" /> 
                             <h:outputText id="fechaVenta" value="#{agregarVentasController.fechaVenta}" /> 
                             <h:outputText value="Vendedor:" /> 
-                            <h:selectOneMenu id="comboVendedor" value="#{agregarVentasController.vendedor}" converter="#{vendedoresConverter}">  
-                                <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />  
+                            <h:selectOneMenu id="comboVendedor" value="#{agregarVentasController.vendedor}" converter="#{vendedoresConverter}" required="true">  
+                                <f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true" />  
                                 <f:selectItems value="#{agregarVentasController.vendedorList}" var="vendedor" itemLabel="#{vendedor.nombre} #{vendedor.apellido}" itemValue="#{vendedor}" />  
-                            </h:selectOneMenu>  
+                            </h:selectOneMenu> 
+                            
+                            <h:outputText value="Total:" /> 
+                            <h:inputText readonly="true" value="#{agregarVentasController.venta.totalVenta}" /> 
+                            <h:outputText value="Total iva:" /> 
+                            <h:inputText readonly="true" value="#{agregarVentasController.venta.totalIva}" /> 
                         </h:panelGrid> 
                     </p:panel> 
                     <p:panel header="Agregar Productos">
                         <h:panelGrid columns="5" cellpadding="5">
                                 <h:outputText value="Producto:" />
-                                <h:selectOneMenu id="comboProductos" value="#{agregarVentasController.producto}" converter="#{productosConverter}">
-                                    <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true" />
+                                <h:selectOneMenu id="comboProductos" value="#{agregarVentasController.producto}" converter="#{productosConverter}" required="true">
+                                    <f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true" />
                                     <f:selectItems value="#{agregarVentasController.productos}" 
                                         var="producto" 
                                         itemLabel="#{producto.nombre}" 
@@ -42,7 +47,7 @@
                                 <p:spinner id="cantidad" value="#{agregarVentasController.cantidad}" min="1" size="2" />
                                 <p:commandButton actionListener="#{agregarVentasController.agregarProducto}" 
                                                  id="buttonAddProducto" value="Agregar Producto"
-                                                 update=":AddVentasForm:datalist"/>
+                                                 update=":AddVentasForm"/>
 
                         </h:panelGrid>
                     </p:panel>
@@ -57,8 +62,10 @@
                             rowsPerPageTemplate="10,20,30,40,50"
                             selectionMode="single"
                             selection="#{agregarVentasController.seleccionado}">
+                            <p:ajax event="rowSelect"   update="@form:deleteButton"/>
+                            <p:ajax event="rowUnselect" update="@form:deleteButton"/>
                             
-                            <p:column sortBy="#{item.idProducto}" filterBy="#{item.idProducto}">
+                            <p:column sortBy="#{item.idProducto.codProducto}" filterBy="#{item.idProducto.codProducto}">
                                 <f:facet name="header">
                                     <h:outputText value="#{myBundle.ListProductosTitle_codProducto}"/>
                                 </f:facet>
@@ -85,14 +92,23 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idProducto.precioUnitario}"/>
                             </p:column>
-                            <p:column sortBy="#{item.idProducto.precioUnitario}" filterBy="#{item.idProducto.precioUnitario}">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Total Iva"/>
+                                </f:facet>
+                                <h:outputText value="#{(item.importeBruto / ((100 + item.idProducto.iva)/item.idProducto.iva))} (#{item.idProducto.iva}%)"/>
+                            </p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Total"/>
                                 </f:facet>
                                 <h:outputText value="#{item.importeBruto}"/>
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton id="buttonGuardar" value="Guardar" immediate="true"/>
+                        <p:commandButton id="buttonGuardar" value="Guardar" icon="ui-icon-disk" action="${agregarVentasController.guardarVenta()}"/>
+                        <p:commandButton id="deleteButton" style="" icon="ui-icon-trash"  value="Borrar" actionListener="#{agregarVentasController.borrarProducto}" update=":growl,datalist,@form:deleteButton" disabled="#{empty agregarVentasController.seleccionado}">
+                            
+                        </p:commandButton>
                     </p:panel>
                 </h:form> 
 

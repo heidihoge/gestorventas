@@ -15,6 +15,7 @@ import is2.Ventas;
 import is2.VentasDetalle;
 import is2.VentasDetalleFacade;
 import is2.VentasFacade;
+import is2.util.JsfUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -28,6 +29,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -35,10 +37,11 @@ import javax.inject.Named;
  * @author ADMIN
  */
 @Named("agregarVentasController")
-@SessionScoped
+@ViewScoped
 public class AgregarVentaController implements Serializable{
     private String fechaVenta;
     private String idCliente;
+    Integer detalleId = 0;
 
     public String getIdCliente() {
         return idCliente;
@@ -71,9 +74,19 @@ public class AgregarVentaController implements Serializable{
     private VentasDetalle seleccionado;
     private Ventas venta;
 
+    public Ventas getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Ventas venta) {
+        this.venta = venta;
+    }
+
     @PostConstruct
     public void initialize(){
         venta = new Ventas();
+        cantidad = 1;
+        venta.setNroFactura(BigDecimal.valueOf(Long.valueOf(ventasFacade.getLastId())));
         venta.setFecha(new Date());
         venta.setNroFactura(BigDecimal.valueOf(Integer.valueOf(getNroVenta())));
         venta.setVentasDetalleCollection(detalles);
@@ -193,7 +206,7 @@ public class AgregarVentaController implements Serializable{
         totalIva += producto.getPrecioUnitario().intValue() * cantidad * producto.getIva() / 100;
         Integer totalVenta = venta.getTotalVenta();
         totalVenta += producto.getPrecioUnitario().intValue() * cantidad;
-        nuevoDetalle.setId(BigDecimal.valueOf(Long.valueOf(ventasDetalleFacade.getLastId())));
+        nuevoDetalle.setId(BigDecimal.valueOf(Long.valueOf(detalleId++)));
         
         
         venta.setTotalIva(totalIva);
@@ -202,5 +215,22 @@ public class AgregarVentaController implements Serializable{
         detalles.add(nuevoDetalle);
     }
     
+    public void borrarProducto(ActionEvent event){
+        detalles.remove(seleccionado);
+        seleccionado = null;
+        JsfUtil.addSuccessMessage("Detalle Borrado.");
+    }
+    
+    public String guardarVenta(){
+        for(VentasDetalle detalle: venta.getVentasDetalleCollection()){
+            detalle.setId(null);
+            ventasDetalleFacade.create(detalle);
+        }
+        venta.setNroFactura(null);
+        ventasFacade.create(venta);
+        
+        JsfUtil.addSuccessMessage("Venta Guardada.");
+        return "/index";
+    }
     
 }

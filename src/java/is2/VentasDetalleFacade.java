@@ -36,7 +36,7 @@ public class VentasDetalleFacade extends AbstractFacade<VentasDetalle> {
             Object singleResult = getLastId.getSingleResult();
             return singleResult.toString();
         }catch(Exception ex){
-            return "0";
+            return "1";
         }
     }
     

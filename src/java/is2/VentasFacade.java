@@ -32,7 +32,7 @@ public class VentasFacade extends AbstractFacade<Ventas> {
             Object singleResult = getLastId.getSingleResult();
             return singleResult.toString();
         }catch(Exception ex){
-            return "0";
+            return "1";
         }
     }
 
