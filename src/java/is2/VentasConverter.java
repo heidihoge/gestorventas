@@ -25,13 +25,13 @@ public class VentasConverter implements Converter {
         return this.ejbFacade.find(getKey(value));
     }
 
-    java.math.BigDecimal getKey(String value) {
-        java.math.BigDecimal key;
-        key = new java.math.BigDecimal(value);
+    Integer getKey(String value) {
+        Integer key;
+        key = new Integer(value);
         return key;
     }
 
-    String getStringKey(java.math.BigDecimal value) {
+    String getStringKey(Integer value) {
         StringBuffer sb = new StringBuffer();
         sb.append(value);
         return sb.toString();

@@ -41,7 +41,7 @@ import javax.inject.Named;
 public class AgregarVentaController implements Serializable{
     private String fechaVenta;
     private String idCliente;
-    Integer detalleId = 0;
+    private Integer ultimoIdDetalle = 0;
 
     public String getIdCliente() {
         return idCliente;
@@ -86,12 +86,12 @@ public class AgregarVentaController implements Serializable{
     public void initialize(){
         venta = new Ventas();
         cantidad = 1;
-        venta.setNroFactura(BigDecimal.valueOf(Long.valueOf(ventasFacade.getLastId())));
+        venta.setNroFactura((Integer.valueOf(ventasFacade.getLastId())));
         venta.setFecha(new Date());
-        venta.setNroFactura(BigDecimal.valueOf(Integer.valueOf(getNroVenta())));
         venta.setVentasDetalleCollection(detalles);
         venta.setTotalIva(0);
         venta.setTotalVenta(0);
+        ultimoIdDetalle = Integer.valueOf(ventasDetalleFacade.getLastId());
     }
     
     public VentasDetalle getSeleccionado() {
@@ -195,18 +195,18 @@ public class AgregarVentaController implements Serializable{
         VentasDetalle nuevoDetalle = new VentasDetalle();
         nuevoDetalle.setIdProducto(producto);
         nuevoDetalle.setImporteBruto(producto.getPrecioUnitario().multiply(BigInteger.valueOf(cantidad)));
-        nuevoDetalle.setMontoIva(producto.getPrecioUnitario()
-                    .multiply(BigInteger.valueOf(cantidad))
-                    .multiply(BigInteger.valueOf(producto.getIva()))
-                    .divide(BigInteger.valueOf(100)));
+        //(item.importeBruto / ((100 + item.idProducto.iva)/item.idProducto.iva)
+        nuevoDetalle.setMontoIva((producto.getPrecioUnitario()
+                    .multiply(BigInteger.valueOf(cantidad)))
+                    .divide(BigInteger.valueOf((producto.getIva().intValue() + 100) / producto.getIva().intValue())));
         nuevoDetalle.setNroFactura(venta);
         nuevoDetalle.setCantidad(BigInteger.valueOf(cantidad));
         
         Integer totalIva = venta.getTotalIva();
-        totalIva += producto.getPrecioUnitario().intValue() * cantidad * producto.getIva() / 100;
+        totalIva += nuevoDetalle.getMontoIva().intValue();
         Integer totalVenta = venta.getTotalVenta();
         totalVenta += producto.getPrecioUnitario().intValue() * cantidad;
-        nuevoDetalle.setId(BigDecimal.valueOf(Long.valueOf(detalleId++)));
+        nuevoDetalle.setId(BigDecimal.valueOf(Long.valueOf(ultimoIdDetalle++)));
         
         
         venta.setTotalIva(totalIva);
@@ -217,20 +217,28 @@ public class AgregarVentaController implements Serializable{
     
     public void borrarProducto(ActionEvent event){
         detalles.remove(seleccionado);
+        Integer totalIva = venta.getTotalIva();
+        totalIva -= seleccionado.getMontoIva().intValue();
+        Integer totalVenta = venta.getTotalVenta();
+        totalVenta -= seleccionado.getImporteBruto().intValue();
+        venta.setTotalIva(totalIva);
+        venta.setTotalVenta(totalVenta);
         seleccionado = null;
         JsfUtil.addSuccessMessage("Detalle Borrado.");
     }
     
     public String guardarVenta(){
-        for(VentasDetalle detalle: venta.getVentasDetalleCollection()){
-            detalle.setId(null);
-            ventasDetalleFacade.create(detalle);
+        try {
+            ventasFacade.create(venta);
+
+            JsfUtil.addSuccessMessage("Venta Guardada.");
+            return "/index";
+        } catch(Exception e){
+            e.printStackTrace();
+            JsfUtil.addErrorMessage("Error al Guardar");
+            return "/venta/index";
         }
-        venta.setNroFactura(null);
-        ventasFacade.create(venta);
-        
-        JsfUtil.addSuccessMessage("Venta Guardada.");
-        return "/index";
+       
     }
     
 }

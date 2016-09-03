@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -53,7 +55,7 @@ public class Ventas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "nro_factura")
-    private BigDecimal nroFactura;
+    private Integer nroFactura;
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -68,15 +70,15 @@ public class Ventas implements Serializable {
     public Ventas() {
     }
 
-    public Ventas(BigDecimal nroFactura) {
+    public Ventas(Integer nroFactura) {
         this.nroFactura = nroFactura;
     }
 
-    public BigDecimal getNroFactura() {
+    public Integer getNroFactura() {
         return nroFactura;
     }
 
-    public void setNroFactura(BigDecimal nroFactura) {
+    public void setNroFactura(Integer nroFactura) {
         this.nroFactura = nroFactura;
     }
 

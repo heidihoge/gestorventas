@@ -106,7 +106,7 @@
                             </p:column>
                         </p:dataTable>
                         <p:commandButton id="buttonGuardar" value="Guardar" icon="ui-icon-disk" action="${agregarVentasController.guardarVenta()}"/>
-                        <p:commandButton id="deleteButton" style="" icon="ui-icon-trash"  value="Borrar" actionListener="#{agregarVentasController.borrarProducto}" update=":growl,datalist,@form:deleteButton" disabled="#{empty agregarVentasController.seleccionado}">
+                        <p:commandButton id="deleteButton" style="" icon="ui-icon-trash"  value="Borrar" actionListener="#{agregarVentasController.borrarProducto}" update=":growl,datalist,@form:deleteButton,:AddVentasForm" disabled="#{empty agregarVentasController.seleccionado}">
                             
                         </p:commandButton>
                     </p:panel>
